@@ -1,0 +1,198 @@
+body {
+    background-image: url('background.jpg');
+    color: white;
+    font-family: 'Quicksand', sans-serif;
+}
+
+.next {
+    background-color: black;
+    border-radius: 30px;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+}
+/* Popup Notification */
+.music-popup {
+    position: fixed;
+    bottom: 100px;
+    right: 30px;
+    background: rgba(255,255,255,0.95);
+    padding: 15px 20px;
+    border-radius: 10px;
+    box-shadow: 0 5px 30px rgba(0,0,0,0.15);
+    z-index: 1001;
+    display: flex;
+    align-items: center;
+    transform: translateX(200%);
+    animation: slideIn 0.8s forwards 0.5s;
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255,255,255,0.2);
+    max-width: 250px;
+}
+
+@keyframes slideIn {
+    to { transform: translateX(0); }
+}
+
+.popup-fade-out {
+    animation: fadeOut 0.5s forwards !important;
+}
+
+@keyframes fadeOut {
+    to { 
+        opacity: 0;
+        transform: translateX(200%);
+    }
+}
+
+.music-popup::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    right: 30px;
+    border-width: 10px 10px 0;
+    border-style: solid;
+    border-color: rgba(255,255,255,0.95) transparent transparent;
+}
+
+.music-popup i {
+    margin-right: 10px;
+    color: #8a63d2;
+    font-size: 20px;
+}
+
+.music-popup span {
+    font-family: 'Arial', sans-serif;
+    color: #333;
+    font-size: 14px;
+}
+
+.close-popup {
+    margin-left: 15px;
+    cursor: pointer;
+    color: #888;
+    font-size: 16px;
+    transition: all 0.3s;
+}
+
+.close-popup:hover {
+    color: #ff6b6b;
+    transform: rotate(90deg);
+}
+
+/* Music Player */
+.music-player {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(145deg, #ffffff, #f0f0f0);
+    border-radius: 50%;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15),
+                0 0 0 1px rgba(255,255,255,0.2) inset;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    z-index: 1000;
+}
+
+.music-player:hover {
+    transform: scale(1.1) rotate(5deg);
+    box-shadow: 0 6px 25px rgba(138, 99, 210, 0.3);
+}
+
+.music-player i {
+    font-size: 24px;
+    color: #8a63d2;
+    transition: all 0.3s ease;
+}
+
+.music-player.playing i {
+    color: #ff6b6b;
+    animation: musicBounce 0.6s ease infinite alternate;
+}
+
+@keyframes musicBounce {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.15); }
+}
+
+/* Sound Waves Animation */
+.sound-waves {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    opacity: 0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    padding-bottom: 15px;
+}
+
+.music-player.playing .sound-waves {
+    opacity: 1;
+}
+
+.sound-waves span {
+    display: block;
+    width: 3px;
+    margin: 0 2px;
+    background: linear-gradient(to top, #8a63d2, #6a5acd);
+    border-radius: 3px;
+    animation: sound-wave 1.4s infinite ease-in-out;
+}
+
+.sound-waves span:nth-child(1) { height: 5px; animation-delay: 0.1s; }
+.sound-waves span:nth-child(2) { height: 8px; animation-delay: 0.3s; }
+.sound-waves span:nth-child(3) { height: 12px; animation-delay: 0.5s; }
+.sound-waves span:nth-child(4) { height: 8px; animation-delay: 0.7s; }
+.sound-waves span:nth-child(5) { height: 5px; animation-delay: 0.9s; }
+
+@keyframes sound-wave {
+    0%, 100% { transform: scaleY(0.7); }
+    50% { transform: scaleY(1.5); }
+}
+
+/* Container Styles */
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.image-center {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.next {
+    background-color: #8a63d2;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 20px;
+    transition: all 0.3s;
+}
+
+.next:hover {
+    background-color: #6a5acd;
+    transform: scale(1.05);
+}

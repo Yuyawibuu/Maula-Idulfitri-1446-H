@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Met Lebaran!</title>
+    <style>
+
+body {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+            overflow-x: hidden;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            width: 90%;
+            max-width: 600px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        #text {
+            font-size: 1.8rem;
+            line-height: 1.6;
+            margin: 30px 0;
+            min-height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+        }
+
+        #image-gif {
+            width: 200px;
+            height: 200px;
+            object-fit: contain;
+            margin: 20px auto;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.5s ease;
+        }
+
+        .next {
+            background: linear-gradient(45deg, #f8d347, #f5b041);
+            color: #1e3c72;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            margin-top: 20px;
+            font-weight: 600;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .next:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .text-animate {
+            animation: textFadeIn 0.8s ease forwards;
+        }
+
+        @keyframes textFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .arabic-text {
+            font-family: 'Traditional Arabic', 'Arial', sans-serif;
+            font-size: 2.2rem;
+            line-height: 1.8;
+        }
+
+        @media (max-width: 768px) {
+            #text {
+                font-size: 1.4rem;
+                min-height: 120px;
+            }
+            .arabic-text {
+                font-size: 1.8rem;
+            }
+            #image-gif {
+                width: 150px;
+                height: 150px;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="text-center">
+            <img src="giphy.gif" alt="" id="image-alt" width="80vh;">
+        </div>
+        <div class="image-center">
+            <img src="https://c.tenor.com/W8JwWPQ2ExgAAAAj/assalamualaikum-breakfasting.gif" alt="" id="image-gif">
+        </div>
+        <div class="text-center">
+            <p id="text" style="text-align: center;"></p>
+        </div>
+
+        <!-- Music Popup Notification -->
+        <div class="music-popup" id="musicPopup">
+            <i class="fas fa-music"></i>
+            <span>Klik ikon musik untuk memutar lagu</span>
+            <div class="close-popup" id="closePopup">
+                <i class="fas fa-times"></i>
+            </div>
+        </div>
+
+        <!-- Music Player -->
+        <button class="music-player" id="musicButton">
+            <i class="fas fa-music"></i>
+            <div class="sound-waves">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <audio id="bgMusic" loop>
+                <source src="https://g.top4top.io/m_33768itct1.mp3" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+        </button>
+
+        <div class="text-center">
+            <button type="button" class="next" value="0">Klik >>></button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const musicBtn = document.getElementById('musicButton');
+            const audio = document.getElementById('bgMusic');
+            const popup = document.getElementById('musicPopup');
+            const closeBtn = document.getElementById('closePopup');
+            
+            // Set default volume
+            audio.volume = 0.7;
+            
+            // Close popup function
+            function closePopup() {
+                popup.style.animation = 'none';
+                popup.style.opacity = '0';
+                setTimeout(() => popup.style.display = 'none', 300);
+            }
+            
+            // Close when X is clicked
+            closeBtn.addEventListener('click', closePopup);
+            
+            // Auto close after 5 seconds
+            setTimeout(closePopup, 5000);
+            
+            // Music player functionality
+            musicBtn.addEventListener('click', function() {
+                if (audio.paused) {
+                    audio.play()
+                        .then(() => {
+                            this.classList.add('playing');
+                            closePopup();
+                        })
+                        .catch(error => {
+                            console.log('Gagal memutar musik:', error);
+                        });
+                } else {
+                    audio.pause();
+                    this.classList.remove('playing');
+                }
+            });
+            
+            // Try autoplay (will fail in most browsers)
+            audio.play().catch(error => {
+                console.log('Autoplay dicegah, menunggu interaksi pengguna');
+            });
+        });
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>
